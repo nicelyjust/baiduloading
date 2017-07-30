@@ -77,11 +77,19 @@ public class PaintView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         mRect.set(0, 0, mWidth, mHeight);
-        mTxtPaint.setTextAlign(Paint.Align.CENTER);
-        Paint.FontMetrics fontMetrics = mTxtPaint.getFontMetrics();
+        // 绘制中间的文字
+        drawCenterTxt(canvas , mTxtPaint , mDrawText);
+    }
+
+    private void drawCenterTxt(Canvas canvas, Paint txtPaint, String drawText) {
+        txtPaint.setTextAlign(Paint.Align.CENTER);
+        Paint.FontMetrics fontMetrics = txtPaint.getFontMetrics();
         float             top         = fontMetrics.top;
         float             bottom      = fontMetrics.bottom;
-        canvas.drawText(mDrawText , 0 , canvas.getHeight()/2 , mTxtPaint);
+
+        int centerY = (int) (mRect.centerY()- top/2 - bottom/2);
+
+        canvas.drawText(drawText , mRect.centerX()  , centerY , txtPaint);
     }
 
 }
