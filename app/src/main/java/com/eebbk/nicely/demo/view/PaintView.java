@@ -45,6 +45,8 @@ public class PaintView extends View {
     }
 
     private void init() {
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.BLACK);
         //文字画笔（抗锯齿粗体）
         mTxtPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTxtPaint.setColor(Color.rgb(41 , 163 , 254));
@@ -90,6 +92,16 @@ public class PaintView extends View {
         int centerY = (int) (mRect.centerY()- top/2 - bottom/2);
 
         canvas.drawText(drawText , mRect.centerX()  , centerY , txtPaint);
+        // 根据path裁剪画布
+        mPath = getPath();
+        canvas.drawPath(mPath , mPaint);
+        canvas.clipPath(mPath);
     }
 
+    public Path getPath() {
+        Path path = new Path();
+        path.moveTo(0 , mHeight>>2);
+        path.lineTo(mWidth , mHeight>>2);
+        return path;
+    }
 }
